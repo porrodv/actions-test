@@ -2,22 +2,25 @@
 name: Deploy to server
 'on': push
 jobs:
-  first_jobs:
+  first_job:
     runs-on: ubuntu-latest
+    outputs:
+      salida: ${{ steps.step_1.outputs.my_variable }}
     steps:
       - name: Send message
         id: step_1
-        run: echo "my_variable=Alex" >> $GITHUB_OUTPUT
+        run: echo "my_variable=Alex" >> test.log
 
       - name: Print message
         run: echo ${{ steps.step_1.outputs.my_variable }}
 
-  second_jobs:
+  second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: first_jobs
+    needs: first_job
     runs-on: ubuntu-latest
     env:
-      NAME: Alex
+      NAME: Alex 2
+      SALIDA: ${{ needs.first_job.outputs.salida }}
     steps:
       - name: Hello world
-        run: echo "hello world! ${{ github.ref }}, $NAME"
+        run: echo "hello world! ${{ github.ref }}, $NAME - $SALIDA"
