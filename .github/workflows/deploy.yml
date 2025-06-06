@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Upload artifact
-      if: ${{ matrix.os == 'ubuntu-latest' && matrix.node === 18 }}
+      if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == 18 }}
       id: deployment
       uses: actions/upload-pages-artifact@v3
       with:
