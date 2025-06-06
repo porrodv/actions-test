@@ -1,6 +1,9 @@
 name: Deploy
 
-on: push
+on:
+  push:
+    branches:
+    - "class-3"
 
 jobs:
   first_job:
@@ -25,6 +28,7 @@ jobs:
       run: npm run test
 
   deploy:
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
